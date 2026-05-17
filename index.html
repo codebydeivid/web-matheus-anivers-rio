@@ -42,22 +42,77 @@
     <img src="https://i.ibb.co/tpYQXz3g/voucher-anivers-rio.png" alt="Voucher ampliado" class="lightbox-img" />
   </div>
 
+  <!-- Áudios -->
+  <audio id="bgMusic" loop>
+    <source src="pain-2.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="clickSound" preload="auto">
+    <source src="clicksoundeffect.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="hbMusic" preload="auto">
+    <source src="hb128.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
+    const bgMusic = document.getElementById('bgMusic');
+    const clickSound = document.getElementById('clickSound');
+    const hbMusic = document.getElementById('hbMusic');
+
+    function playClick() {
+      clickSound.currentTime = 0;
+      clickSound.play().catch(() => {});
+    }
+
+    // Inicia música no primeiro clique (política do navegador)
+    let musicStarted = false;
+    document.addEventListener('click', function startMusic() {
+      if (!musicStarted) {
+        bgMusic.volume = 0.35;
+        bgMusic.play().catch(() => {});
+        musicStarted = true;
+        document.removeEventListener('click', startMusic);
+      }
+    });
+
+    document.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', playClick);
+    });
+
     document.getElementById('openBtn').addEventListener('click', () => {
       document.getElementById('overlay').classList.add('active');
+      // Pausa o bg e toca o happy birthday
+      bgMusic.pause();
+      hbMusic.currentTime = 0;
+      hbMusic.volume = 0.8;
+      hbMusic.play().catch(() => {});
+      // Quando o hb terminar, retoma o bg
+      hbMusic.onended = () => {
+        bgMusic.play().catch(() => {});
+      };
     });
+
     document.getElementById('closeBtn').addEventListener('click', () => {
       document.getElementById('overlay').classList.remove('active');
+      hbMusic.pause();
+      hbMusic.currentTime = 0;
+      bgMusic.play().catch(() => {});
     });
+
     document.getElementById('overlay').addEventListener('click', e => {
-      if (e.target === document.getElementById('overlay'))
+      if (e.target === document.getElementById('overlay')) {
         document.getElementById('overlay').classList.remove('active');
+        hbMusic.pause();
+        hbMusic.currentTime = 0;
+        bgMusic.play().catch(() => {});
+      }
     });
 
     document.getElementById('ticketThumb').addEventListener('click', () => {
+      playClick();
       document.getElementById('lightbox').classList.add('active');
     });
     document.getElementById('lightbox').addEventListener('click', () => {
+      playClick();
       document.getElementById('lightbox').classList.remove('active');
     });
   </script>
