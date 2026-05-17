@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Nada Suspeito Confia</title>
+</head>
+<body>
+  <div class="scene">
+    <div class="bg"></div>
+      <div class="center">
+        <button class="btn" id="openBtn"><p class="textBtn">Não aperte</p></button>
+      </div>
+    <img class="corner-gif" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDJza2hrc3loOTQ5aG9lcW40emZua25zbWYwemtwNjVhZWwwaHR1MSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PQHZH0iHMCmrNhRcE9/giphy.gif" alt="" />
+    </div>
+
+    <div class="overlay" id="overlay">
+      <div class="overlay-content">
+
+        <div class="birthday-text">
+          <p class="feliz">Feliz Aniversário</p>
+          <p class="nome">Matheus<span>!</span></p>
+        </div>
+
+        <div class="msg">
+          Parabéns por mais um ano de vida mano!<br>
+          Finje que eu nunca esqueci nada, e aceite o presente :D 
+        </div>
+
+        <div class="ticket-wrap">
+          <img class="ticket-img" id="ticketThumb" src="https://i.ibb.co/tpYQXz3g/voucher-anivers-rio.png" alt="Voucher de aniversário" />
+          <p class="ticket-hint">clique para ampliar</p>
+        </div>
+
+        <button class="close-btn" id="closeBtn">fechar</button>
+      </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <img src="https://i.ibb.co/tpYQXz3g/voucher-anivers-rio.png" alt="Voucher ampliado" class="lightbox-img" />
+  </div>
+
+  <script>
+    document.getElementById('openBtn').addEventListener('click', () => {
+      document.getElementById('overlay').classList.add('active');
+    });
+    document.getElementById('closeBtn').addEventListener('click', () => {
+      document.getElementById('overlay').classList.remove('active');
+    });
+    document.getElementById('overlay').addEventListener('click', e => {
+      if (e.target === document.getElementById('overlay'))
+        document.getElementById('overlay').classList.remove('active');
+    });
+
+    document.getElementById('ticketThumb').addEventListener('click', () => {
+      document.getElementById('lightbox').classList.add('active');
+    });
+    document.getElementById('lightbox').addEventListener('click', () => {
+      document.getElementById('lightbox').classList.remove('active');
+    });
+  </script>
+</body>
+</html>
